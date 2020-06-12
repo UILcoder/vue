@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8"></meta>
+    <style>
+      .active {
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="(item,index) in movies" 
+        	:class="{active:currentIndex===index}" 
+        	@click="liClick(index)">{{item}}</li>
+      </ul>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          movies: ["西红柿首富", "泰囧", "长江七号", "前任攻略3"],
+          currentIndex: 0
+        },
+        methods: {
+          liClick(index) {
+            this.currentIndex = index
+          }
+        }
+      })
+    </script>
+  </body>
+
+</html>
