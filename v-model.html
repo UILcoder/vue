@@ -8,18 +8,19 @@
 
   <body>
     <div id="app">
-      <label for="agree">
-      	<input type="checkbox" id="agree" v-model="isAgree"/>同意协议
-      </label>
-      <br />
-      <button :disabled="!isAgree">下一步</button>
+     <input type="checkbox" id="hobbies" value="篮球" v-model="hobbies" />篮球
+     <input type="checkbox" id="hobbies" value="羽毛球" v-model="hobbies" />羽毛球
+     <input type="checkbox" id="hobbies" value="乒乓球" v-model="hobbies" />乒乓球
+     <input type="checkbox" id="hobbies" value="排球" v-model="hobbies" />排球
+     <input type="checkbox" id="hobbies" value="游泳" v-model="hobbies" />游泳
+     <h2>您选中的爱好有：{{hobbies}}</h2>
     </div>
     <script src="vue.js"></script>
     <script>
       var app = new Vue({
         el: "#app",
         data: {
-          isAgree:false
+          hobbies:[]
         }
       })
     </script>
