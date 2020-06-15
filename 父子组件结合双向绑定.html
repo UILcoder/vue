@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <title>demo</title>
+  </head>
+
+  <body>
+    <div id="app">
+    <!--父组件模板中  传入num1，num2，并在父组件监听num1change和num2change-->
+      <cpn :cnum1="num1" :cnum2="num2" @num1change='num1change'  @num2change='num2change'></cpn>
+    </div>
+    <!--子组件模板-->
+    <template id="cpn">
+      <div>
+        <h2>props:{{cnum1}}</h2><!--使用父组件数据-->
+        <h2>data:{{number1}}</h2><!--使用组件props里的数据-->
+        <input type="text" :value="number1" @input="num1Input"/><!--双向绑定组件data数据，在子组件调用num1Input函数-->
+        <h2>props:{{cnum2}}</h2>
+        <h2>data:{{number2}}</h2>
+        <input type="text" :value="number2" @input="num2Input"/>
+      </div>
+    </template>
+    <script src="vue.js"></script>
+    <script>
+      //子组件
+      const cpn = {
+        template: "#cpn",
+        data() {
+        	return {
+        		number1:this.cnum1,//将props数据传递给子组件data，有利于子组件将更改后的数据传递给父组件
+        		number2:this.cnum2
+        	}
+
+        },
+        //将父组件的数据传给子组件，并定义类型为number
+        props:{
+        	cnum1:Number,
+        	cnum2:Number
+        },
+        methods:{
+        	num1Input(value){
+        		value=event.target.value,
+        		this.number1=parseInt(value),//把文本框的值转化为number类型
+        		this.$emit("num1change",this.number1),//发射事件，并发射绑定的data值
+        		this.number2=this.number1*100,   
+        		this.$emit("num2change",this.number2)
+        		
+        	},
+        	num2Input(value){
+        		value=event.target.value,
+        		this.number2=parseFloat(value),
+        		this.$emit("num2change",this.number2)
+        		this.number1=this.number2/100,
+        		this.$emit("num1change",this.number1)
+        	}
+        	
+        }
+      }
+      //父组件
+      var app = new Vue({
+        el: "#app",
+        data: {
+          num1: 0,
+          num2: 1
+        },
+        components: {
+          cpn
+        },
+        methods:{
+        	//将发射的值，赋值给num1,从来实时改变vue实例的值。
+        	num1change(cnum1){
+        		this.num1=cnum1
+        	},
+        	num2change(cnum2){
+        		this.num2=cnum2
+        	}
+        }
+      })
+    </script>
+  </body>
+
+</html>
